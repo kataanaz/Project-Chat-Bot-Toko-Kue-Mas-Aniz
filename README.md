@@ -10,13 +10,12 @@ Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini u
 
 ---
 
-## 🌐 Demo Aplikasi Langsung (Live Demo)
+## 🌐 Publikasi Cloud (Opsional)
 
-Aplikasi ini dapat diakses secara langsung melalui Streamlit Community Cloud:
-👉 **[Demo Kue Mas Aniz di Streamlit Cloud](https://share.streamlit.io/)** *(Silakan tautkan URL spesifik aplikasi Anda setelah selesai deploy)*
-
-> [!NOTE]
-> **Catatan Ketersediaan:** Jika aplikasi berada dalam status *asleep* / tertidur (karena tidak diakses dalam beberapa waktu di server gratis Streamlit Cloud), silakan klik tombol **"Yes, get this app back up!"** di layar dan tunggu beberapa saat hingga server kembali aktif.
+Selain dijalankan di komputer lokal (*on-site kiosk*), aplikasi ini dirancang *cloud-ready* dan dapat dipublikasikan ke **Streamlit Community Cloud** secara gratis jika ingin diakses secara daring:
+- Struktur berkas dan modul bersifat mandiri dengan path relatif.
+- Otomatis mendukung pembacaan kredensial `st.secrets` maupun variabel lingkungan `.env`.
+- Langkah-langkah penerbitan ke cloud dapat dilihat pada bagian [Panduan Deployment ke Streamlit Community Cloud](#6-panduan-deployment-ke-streamlit-community-cloud-opsional).
 
 ---
 
@@ -75,7 +74,7 @@ Project-Chat-Bot-Toko-Kue-Mas-Aniz/
 ├── data/
 │   └── katalog.json          # Data fiktif 8 produk dan 2 paket
 └── docs/
-    ├── CHAPTER.md            # Spesifikasi teknis chapter 1 - 8
+    ├── CHAPTER.md            # Dokumentasi modul & spesifikasi teknis
     ├── hasil-uji.md          # Laporan evaluasi 10 skenario guardrails
     ├── screenshot-1-tampilan-awal.png            # (Tangkapan layar antarmuka aktual)
     ├── screenshot-2-rekomendasi-katalog.png      # (Tangkapan layar antarmuka aktual)
@@ -134,7 +133,7 @@ streamlit run app.py
 ```
 Aplikasi akan otomatis terbuka pada peramban web di alamat `http://localhost:8501`.
 
-### 6. Panduan Deployment ke Streamlit Community Cloud
+### 6. Panduan Deployment ke Streamlit Community Cloud (Opsional)
 1. Pastikan repositori GitHub Anda bersifat **Public**.
 2. Masuk ke [share.streamlit.io](https://share.streamlit.io) menggunakan akun GitHub Anda.
 3. Klik tombol **"New app"** (atau *"Create app"*).

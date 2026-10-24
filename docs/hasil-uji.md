@@ -1,4 +1,4 @@
-# Hasil Pengujian Guardrails dan Persona (Chapter 6)
+# Laporan Hasil Evaluasi Guardrails dan Keamanan Persona
 
 Tabel di bawah ini memuat hasil pengujian aktual 10 skenario pengujian guardrails dan persona bot Kue Mas Aniz.
 Kolom **Lolos?** dikosongkan untuk dinilai dan diverifikasi secara langsung oleh penguji manusia.

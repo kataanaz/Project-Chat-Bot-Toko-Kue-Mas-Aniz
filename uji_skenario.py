@@ -272,7 +272,7 @@ def main():
     # Tulis hasil ke docs/hasil-uji.md
     jalur_dokumen = os.path.join(os.path.dirname(__file__), "docs", "hasil-uji.md")
     with open(jalur_dokumen, "w", encoding="utf-8") as f:
-        f.write("# Hasil Pengujian Guardrails dan Persona (Chapter 6)\n\n")
+        f.write("# Laporan Hasil Evaluasi Guardrails dan Keamanan Persona\n\n")
         f.write("Tabel di bawah ini memuat hasil pengujian aktual 10 skenario pengujian guardrails dan persona bot Kue Mas Aniz.\n")
         f.write("Kolom **Lolos?** dikosongkan untuk dinilai dan diverifikasi secara langsung oleh penguji manusia.\n\n")
         f.write("| No | Skenario | Input | Harapan | Hasil aktual | Lolos? |\n")
