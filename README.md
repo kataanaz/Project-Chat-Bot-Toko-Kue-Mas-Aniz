@@ -1,4 +1,4 @@
-# 🍰 Chatbot Pelayan Toko Kue "Kue Mas Aniz"
+# 🍰 Chatbot Pelayan Toko Kue Mas Aniz
 
 Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini untuk toko kue fiktif **"Kue Mas Aniz"**. Proyek ini berfokus pada penerapan skenario *on-site ordering* (layar pemesanan mandiri di depan toko), *function calling* katalog murni, *guardrails persona*, serta mekanisme verifikasi pesanan fisik sebelum diteruskan ke kasir manusia.
 
