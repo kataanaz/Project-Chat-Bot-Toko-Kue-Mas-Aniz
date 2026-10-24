@@ -1,3 +1,7 @@
+"""
+Pengujian unit independen untuk fungsi bisnis katalog, kalkulasi stok paket,
+keranjang belanja, dan ketiadaan kata 'pcs'.
+"""
 import json
 import tools
 
