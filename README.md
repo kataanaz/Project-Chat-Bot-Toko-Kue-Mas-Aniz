@@ -176,3 +176,7 @@ Berikut tangkapan layar antarmuka pemesanan mandiri aplikasi "Kue Mas Aniz":
 - **Cakupan MVP:** Aplikasi ini berfokus pada asisten pemilihan kue dan pengisian keranjang di tempat (*on-site kiosk*). Tidak melayani pengiriman jarak jauh (delivery) atau integrasi payment gateway perbankan.
 - **Kapasitas Sesi:** Dibatasi maksimal 500 karakter per pesan dan 40 pesan per sesi guna mengoptimalkan kuota API.
 - **Penyimpanan Sesi:** Riwayat percakapan dan stok sesi tersimpan di dalam memory `st.session_state` (akan tereset saat tab browser baru dibuka secara independen).
+
+---
+
+*Dikembangkan dengan Python, Streamlit, dan Google GenAI SDK.*
