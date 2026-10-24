@@ -10,6 +10,16 @@ Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini u
 
 ---
 
+## 🌐 Demo Aplikasi Langsung (Live Demo)
+
+Aplikasi ini dapat diakses secara langsung melalui Streamlit Community Cloud:
+👉 **[Demo Kue Mas Aniz di Streamlit Cloud](https://share.streamlit.io/)** *(Silakan tautkan URL spesifik aplikasi Anda setelah selesai deploy)*
+
+> [!NOTE]
+> **Catatan Ketersediaan:** Jika aplikasi berada dalam status *asleep* / tertidur (karena tidak diakses dalam beberapa waktu di server gratis Streamlit Cloud), silakan klik tombol **"Yes, get this app back up!"** di layar dan tunggu beberapa saat hingga server kembali aktif.
+
+---
+
 ## 🌟 Fitur Utama
 
 1. **Persona Hangat & Konsisten:**
@@ -118,11 +128,25 @@ Buka file `.env` dan masukkan kunci API Google AI Studio Anda:
 GEMINI_API_KEY=kunci_api_google_ai_studio_anda
 ```
 
-### 5. Jalankan Aplikasi
+### 5. Jalankan Aplikasi Secara Lokal
 ```bash
 streamlit run app.py
 ```
 Aplikasi akan otomatis terbuka pada peramban web di alamat `http://localhost:8501`.
+
+### 6. Panduan Deployment ke Streamlit Community Cloud
+1. Pastikan repositori GitHub Anda bersifat **Public**.
+2. Masuk ke [share.streamlit.io](https://share.streamlit.io) menggunakan akun GitHub Anda.
+3. Klik tombol **"New app"** (atau *"Create app"*).
+4. Pilih konfigurasi repositori:
+   - **Repository:** `kataanaz/Project-Chat-Bot-Toko-Kue-Mas-Aniz`
+   - **Branch:** `main`
+   - **Main file path:** `app.py`
+5. Buka menu **Advanced settings...** -> tab **Secrets**, lalu tambahkan konfigurasi API key:
+   ```toml
+   GEMINI_API_KEY = "masukkan_api_key_google_anda_di_sini"
+   ```
+6. Klik **Save** lalu klik **Deploy!**. Streamlit Cloud akan menginstal seluruh pustaka dari `requirements.txt` dan menjalankan aplikasi secara otomatis.
 
 ---
 
