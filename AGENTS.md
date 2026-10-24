@@ -1,4 +1,4 @@
-# AGENTS.md: Aturan untuk agen koding
+# AGENTS.md: Aturan dan Panduan Pengembang
 
 ## Proyek
 Chatbot Streamlit pelayan toko kue fiktif "Kue Mas Aniz" (SEMUA data fiktif).
