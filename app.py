@@ -1,3 +1,8 @@
+"""
+Aplikasi Chatbot Pelayan Toko Kue Mas Aniz (Streamlit)
+Mengintegrasikan model Gemini dengan function calling katalog, keranjang belanja,
+dan alur pemesanan mandiri on-site kiosk.
+"""
 import os
 import streamlit as st
 import dotenv
