@@ -1,3 +1,7 @@
+"""
+Modul fungsi bisnis murni untuk katalog kue, stok, kalkulasi keranjang belanja,
+dan pengiriman pesanan ke kasir toko Kue Mas Aniz.
+"""
 import json
 import os
 import re
