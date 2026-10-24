@@ -1,3 +1,7 @@
+"""
+Skrip evaluasi otomatis 10 skenario ketahanan guardrails dan persona bot.
+Hasil evaluasi dicatat ke dalam berkas docs/hasil-uji.md.
+"""
 import os
 import sys
 import dotenv
