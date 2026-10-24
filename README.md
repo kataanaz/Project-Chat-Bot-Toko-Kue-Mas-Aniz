@@ -1,6 +1,6 @@
 # 🍰 Chatbot Pelayan Toko Kue "Kue Mas Aniz"
 
-Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini untuk toko kue fiktif **"Kue Mas Aniz"**. Proyek ini dikembangkan sebagai Tugas Akhir kelas LLM Hacktiv8 dengan fokus pada penerapan skenario *on-site ordering* (layar pemesanan mandiri di depan toko), *function calling* katalog murni, *guardrails persona*, serta mekanisme verifikasi pesanan fisik sebelum diteruskan ke kasir manusia.
+Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini untuk toko kue fiktif **"Kue Mas Aniz"**. Proyek ini berfokus pada penerapan skenario *on-site ordering* (layar pemesanan mandiri di depan toko), *function calling* katalog murni, *guardrails persona*, serta mekanisme verifikasi pesanan fisik sebelum diteruskan ke kasir manusia.
 
 ---
 
@@ -76,11 +76,7 @@ Project-Chat-Bot-Toko-Kue-Mas-Aniz/
 └── docs/
     ├── CHAPTER.md            # Dokumentasi modul & spesifikasi teknis
     ├── hasil-uji.md          # Laporan evaluasi 10 skenario guardrails
-    ├── screenshot-1-tampilan-awal.png            # (Tangkapan layar antarmuka aktual)
-    ├── screenshot-2-rekomendasi-katalog.png      # (Tangkapan layar antarmuka aktual)
-    ├── screenshot-3-keranjang-dan-ringkasan.png  # (Tangkapan layar antarmuka aktual)
-    ├── screenshot-4-panel-kasir.png              # (Tangkapan layar antarmuka aktual)
-    └── screenshot-5-guardrails-persona.png       # (Tangkapan layar antarmuka aktual)
+    └── screenshot-preview.png # Tangkapan layar antarmuka aplikasi
 ```
 
 ---
@@ -167,24 +163,11 @@ Proyek ini dilengkapi dengan 2 modul pengujian otomatis:
 
 ---
 
-## 📸 Dokumentasi Antarmuka (Screenshots)
+## 📸 Pratinjau Antarmuka
 
-Berikut tangkapan layar antarmuka aplikasi "Kue Mas Aniz":
+Berikut tangkapan layar antarmuka pemesanan mandiri aplikasi "Kue Mas Aniz":
 
-### 1. Tampilan Awal Layar Pemesanan
-![Tampilan Awal Layar Pemesanan](docs/screenshot-1-tampilan-awal.png)
-
-### 2. Rekomendasi Menu & Pencarian Produk
-![Rekomendasi Menu dan Katalog](docs/screenshot-2-rekomendasi-katalog.png)
-
-### 3. Keranjang Belanja & Tombol Konfirmasi Pesanan
-![Keranjang Belanja dan Konfirmasi](docs/screenshot-3-keranjang-dan-ringkasan.png)
-
-### 4. Panel Pemantauan Kasir (Manusia)
-![Panel Kasir Real-time](docs/screenshot-4-panel-kasir.png)
-
-### 5. Ketahanan Guardrails & Persona Bot
-![Uji Guardrails Persona](docs/screenshot-5-guardrails-persona.png)
+![Pratinjau Antarmuka Aplikasi Kue Mas Aniz](docs/screenshot-preview.png)
 
 ---
 

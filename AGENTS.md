@@ -1,7 +1,7 @@
 # AGENTS.md: Aturan untuk agen koding
 
 ## Proyek
-Chatbot Streamlit pelayan toko kue fiktif "Kue Mas Aniz" (tugas akhir kelas LLM Hacktiv8; SEMUA data fiktif).
+Chatbot Streamlit pelayan toko kue fiktif "Kue Mas Aniz" (SEMUA data fiktif).
 Skenario on-site: pelanggan chat di layar depan toko, bot membantu memilih kue dan mengisi keranjang, lalu
 mengirim ringkasan pesanan ke kasir (manusia). Pembayaran dan penyerahan kue dilakukan manusia.
 Ini MVP: jangan menambah fitur di luar daftar di docs/CHAPTER.md.
