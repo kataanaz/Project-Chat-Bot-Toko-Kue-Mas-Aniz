@@ -1,4 +1,4 @@
-# docs/CHAPTER.md: Spesifikasi Chapter 1-8
+# Spesifikasi Teknis dan Panduan Modul Fungsional
 
 Aturan umum untuk semua chapter: baca AGENTS.md dulu, beri rencana, tunggu "lanjut", kerjakan hanya chapter yang diminta,
 uji, laporkan, BERHENTI.
