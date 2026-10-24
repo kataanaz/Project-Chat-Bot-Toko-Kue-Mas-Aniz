@@ -216,3 +216,219 @@ def daftar_terlaris():
         "total": len(hasil),
         "hasil": hasil
     }
+
+def inisialisasi_stok():
+    """Mengembalikan dictionary salinan stok awal dari katalog.json."""
+    katalog = _muat_katalog()
+    return {p["nama"]: p["stok"] for p in katalog.get("produk", [])}
+
+def _cari_item_katalog(nama):
+    """Mencari entitas produk atau paket dari katalog berdasarkan nama."""
+    katalog = _muat_katalog()
+    nama_norm = _bersihkan_teks(nama)
+    for p in katalog.get("produk", []):
+        if _bersihkan_teks(p.get("nama")) == nama_norm:
+            return {"tipe": "produk", "data": p}
+    for pak in katalog.get("paket", []):
+        if _bersihkan_teks(pak.get("nama")) == nama_norm:
+            return {"tipe": "paket", "data": pak}
+    return None
+
+def hitung_stok_tersedia(nama, stok_aktif):
+    """Menghitung sisa stok aktual yang tersedia berdasarkan stok_aktif."""
+    item = _cari_item_katalog(nama)
+    if not item:
+        return 0
+    if item["tipe"] == "produk":
+        return stok_aktif.get(item["data"]["nama"], 0)
+    elif item["tipe"] == "paket":
+        katalog = _muat_katalog()
+        komponen_stok = []
+        for isi in item["data"].get("isi", []):
+            stok_komp = stok_aktif.get(isi.get("produk"), 0)
+            komponen_stok.append(stok_komp // max(1, isi.get("jumlah", 1)))
+        return min(komponen_stok) if komponen_stok else 0
+
+def tambah_ke_keranjang(keranjang, stok_aktif, nama, jumlah):
+    """
+    Menambahkan produk atau paket ke dalam keranjang.
+    Validasi: jumlah 1-20, batas ketersediaan stok, dan nama harus ada di katalog.
+    """
+    if not isinstance(jumlah, int) or jumlah < 1 or jumlah > 20:
+        return {
+            "berhasil": False,
+            "pesan": "Jumlah pesanan harus berupa bilangan bulat antara 1 sampai 20."
+        }
+
+    item = _cari_item_katalog(nama)
+    if not item:
+        return {
+            "berhasil": False,
+            "pesan": f"Menu '{nama}' tidak ditemukan di katalog toko kami."
+        }
+
+    nama_asli = item["data"]["nama"]
+    sebutan = item["data"]["sebutan"]
+    harga = item["data"]["harga"]
+
+    # Hitung jumlah yang sudah ada di keranjang untuk item ini
+    jumlah_di_keranjang = 0
+    for el in keranjang:
+        if el["nama"] == nama_asli:
+            jumlah_di_keranjang = el["jumlah"]
+            break
+
+    total_diminta = jumlah_di_keranjang + jumlah
+    stok_tersedia = hitung_stok_tersedia(nama_asli, stok_aktif)
+
+    if total_diminta > stok_tersedia:
+        return {
+            "berhasil": False,
+            "pesan": f"Maaf kak, stok untuk '{nama_asli}' tidak mencukupi. Tersedia {stok_tersedia} {sebutan}."
+        }
+
+    # Perbarui atau tambahkan ke keranjang
+    ditemukan = False
+    for el in keranjang:
+        if el["nama"] == nama_asli:
+            el["jumlah"] += jumlah
+            el["subtotal"] = el["jumlah"] * harga
+            ditemukan = True
+            break
+
+    if not ditemukan:
+        keranjang.append({
+            "nama": nama_asli,
+            "jumlah": jumlah,
+            "harga": harga,
+            "sebutan": sebutan,
+            "subtotal": harga * jumlah
+        })
+
+    total_keranjang = sum(el["subtotal"] for el in keranjang)
+    return {
+        "berhasil": True,
+        "pesan": f"Berhasil menambahkan {jumlah} {sebutan} {nama_asli} ke keranjang. Subtotal: Rp{harga * jumlah:,}, Total keranjang: Rp{total_keranjang:,}.",
+        "item": nama_asli,
+        "jumlah_ditambahkan": jumlah,
+        "total_keranjang": total_keranjang
+    }
+
+def hapus_dari_keranjang(keranjang, nama):
+    """Menghapus item dari keranjang berdasarkan nama."""
+    nama_norm = _bersihkan_teks(nama)
+    indeks_dihapus = None
+    nama_dihapus = ""
+
+    for i, el in enumerate(keranjang):
+        if _bersihkan_teks(el["nama"]) == nama_norm:
+            indeks_dihapus = i
+            nama_dihapus = el["nama"]
+            break
+
+    if indeks_dihapus is not None:
+        keranjang.pop(indeks_dihapus)
+        total_keranjang = sum(el["subtotal"] for el in keranjang)
+        return {
+            "berhasil": True,
+            "pesan": f"'{nama_dihapus}' berhasil dihapus dari keranjang.",
+            "total_keranjang": total_keranjang
+        }
+
+    return {
+        "berhasil": False,
+        "pesan": f"Item '{nama}' tidak ditemukan di dalam keranjang belanja."
+    }
+
+def lihat_keranjang(keranjang):
+    """Melihat rincian isi keranjang belanja beserta subtotal dan total harga."""
+    if not keranjang:
+        return {
+            "kosong": True,
+            "pesan": "Keranjang belanja Kakak masih kosong.",
+            "daftar_item": [],
+            "total_harga": 0
+        }
+
+    total = sum(el["subtotal"] for el in keranjang)
+    daftar = []
+    for el in keranjang:
+        daftar.append({
+            "nama": el["nama"],
+            "jumlah": el["jumlah"],
+            "sebutan": el["sebutan"],
+            "harga_satuan": el["harga"],
+            "subtotal": el["subtotal"]
+        })
+
+    return {
+        "kosong": False,
+        "total_item": len(keranjang),
+        "daftar_item": daftar,
+        "total_harga": total,
+        "pesan": f"Total belanja di keranjang adalah Rp{total:,}."
+    }
+
+def ringkas_pesanan(keranjang):
+    """Menyiapkan ringkasan pesanan akhir untuk konfirmasi pelanggan."""
+    if not keranjang:
+        return {
+            "kosong": True,
+            "pesan": "Keranjang belanja masih kosong, belum ada pesanan yang dapat diringkas.",
+            "total_harga": 0
+        }
+
+    total = sum(el["subtotal"] for el in keranjang)
+    rincian = [f"{el['jumlah']} {el['sebutan']} {el['nama']} (Rp{el['subtotal']:,})" for el in keranjang]
+
+    return {
+        "kosong": False,
+        "rincian_pesanan": rincian,
+        "total_harga": total,
+        "pesan": f"Ringkasan pesanan: {', '.join(rincian)}. Total pembayaran: Rp{total:,}. Mohon konfirmasi apakah pesanan sudah sesuai, Kak?"
+    }
+
+def kirim_ke_kasir(keranjang, stok_aktif, counter_pesanan):
+    """
+    Mengirim pesanan ke kasir: memotong stok aktual dan membuat data pesanan kasir.
+    Hanya dijalankan saat konfirmasi akhir disetujui.
+    """
+    if not keranjang:
+        return {
+            "berhasil": False,
+            "pesan": "Keranjang kosong, tidak ada pesanan untuk dikirim ke kasir."
+        }
+
+    katalog = _muat_katalog()
+    nomor_pesanan = f"A-{counter_pesanan:03d}"
+    total = sum(el["subtotal"] for el in keranjang)
+    rincian_kasir = []
+
+    # Potong stok aktual untuk setiap item
+    for el in keranjang:
+        nama_item = el["nama"]
+        jumlah_beli = el["jumlah"]
+        rincian_kasir.append(f"{jumlah_beli} {el['sebutan']} {nama_item}")
+
+        # Cek apakah produk tunggal atau paket
+        item = _cari_item_katalog(nama_item)
+        if item and item["tipe"] == "produk":
+            stok_aktif[nama_item] = max(0, stok_aktif.get(nama_item, 0) - jumlah_beli)
+        elif item and item["tipe"] == "paket":
+            for isi in item["data"].get("isi", []):
+                prod_nama = isi.get("produk")
+                butuh = isi.get("jumlah", 1) * jumlah_beli
+                stok_aktif[prod_nama] = max(0, stok_aktif.get(prod_nama, 0) - butuh)
+
+    data_pesanan = {
+        "nomor": nomor_pesanan,
+        "daftar_item": rincian_kasir,
+        "total_harga": total,
+        "status": "Diterima Kasir"
+    }
+
+    return {
+        "berhasil": True,
+        "pesanan": data_pesanan,
+        "pesan": f"Pesanan {nomor_pesanan} berhasil diteruskan ke kasir toko. Total: Rp{total:,}."
+    }

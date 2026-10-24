@@ -101,6 +101,64 @@ def test_ketiadaan_kata_pcs_di_semua_fungsi():
         alergen_res = tools.info_alergen(p["nama"])
         periksa_tidak_ada_pcs(alergen_res)
 
+def test_keranjang_dan_pesanan():
+    stok = tools.inisialisasi_stok()
+    keranjang = []
+
+    # 1. Tambah normal
+    res1 = tools.tambah_ke_keranjang(keranjang, stok, "Brownies Panggang", 2)
+    assert res1["berhasil"] is True
+    assert res1["total_keranjang"] == 30000
+    assert len(keranjang) == 1
+    periksa_tidak_ada_pcs(res1)
+
+    # 2. Tambah paket
+    res2 = tools.tambah_ke_keranjang(keranjang, stok, "Paket Ngopi Sore", 1)
+    assert res2["berhasil"] is True
+    assert res2["total_keranjang"] == 57000
+    assert len(keranjang) == 2
+    periksa_tidak_ada_pcs(res2)
+
+    # 3. Validasi jumlah di luar 1-20
+    res_nol = tools.tambah_ke_keranjang(keranjang, stok, "Brownies Panggang", 0)
+    assert res_nol["berhasil"] is False
+    res_minus = tools.tambah_ke_keranjang(keranjang, stok, "Brownies Panggang", -5)
+    assert res_minus["berhasil"] is False
+    res_lebih20 = tools.tambah_ke_keranjang(keranjang, stok, "Brownies Panggang", 25)
+    assert res_lebih20["berhasil"] is False
+
+    # 4. Validasi melebihi stok
+    res_over = tools.tambah_ke_keranjang(keranjang, stok, "Lapis Legit", 10) # stok cuma 6
+    assert res_over["berhasil"] is False
+
+    # 5. Lihat keranjang
+    res_lihat = tools.lihat_keranjang(keranjang)
+    assert res_lihat["kosong"] is False
+    assert res_lihat["total_harga"] == 57000
+    periksa_tidak_ada_pcs(res_lihat)
+
+    # 6. Ringkas pesanan
+    res_ringkas = tools.ringkas_pesanan(keranjang)
+    assert res_ringkas["kosong"] is False
+    assert res_ringkas["total_harga"] == 57000
+    periksa_tidak_ada_pcs(res_ringkas)
+
+    # 7. Kirim ke kasir
+    stok_sebelum_brownies = stok["Brownies Panggang"] # 20
+    stok_sebelum_pukis = stok["Pukis Cokelat (isi 5)"] # 12
+    res_kasir = tools.kirim_ke_kasir(keranjang, stok, 1)
+    assert res_kasir["berhasil"] is True
+    assert res_kasir["pesanan"]["nomor"] == "A-001"
+    assert res_kasir["pesanan"]["total_harga"] == 57000
+    assert res_kasir["pesanan"]["status"] == "Diterima Kasir"
+    periksa_tidak_ada_pcs(res_kasir)
+
+    # Verifikasi pemotongan stok aktual
+    # 2 Brownies langsung + 1 Brownies dari Paket Ngopi Sore = 3 terpotong
+    assert stok["Brownies Panggang"] == stok_sebelum_brownies - 3
+    # 1 Pukis dari Paket Ngopi Sore = 1 terpotong
+    assert stok["Pukis Cokelat (isi 5)"] == stok_sebelum_pukis - 1
+
 if __name__ == "__main__":
     print("Menjalankan pengujian tools.py...")
     test_pencarian_normal()
@@ -110,4 +168,5 @@ if __name__ == "__main__":
     test_stok_paket()
     test_daftar_terlaris()
     test_ketiadaan_kata_pcs_di_semua_fungsi()
+    test_keranjang_dan_pesanan()
     print("SEMUA PENGUJIAN tools.py LOLOS 100%!")
