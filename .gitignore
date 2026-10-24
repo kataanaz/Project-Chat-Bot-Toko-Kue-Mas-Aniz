@@ -219,6 +219,6 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# Virtual Environment & Dokumen Konfigurasi Internal
+# Virtual Environment & Berkas Konfigurasi Sensitif
 .venv/
 prompt-antigravity-kue-mas-aniz.md
