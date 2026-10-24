@@ -1,0 +1,124 @@
+{
+  "produk": [
+    {
+      "nama": "Brownies Panggang",
+      "kategori": "cake",
+      "harga": 15000,
+      "stok": 20,
+      "satuan": "pcs",
+      "sebutan": "potong",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Kue brownies panggang dengan tekstur lembut dan cita rasa cokelat nikmat.",
+      "terlaris": true
+    },
+    {
+      "nama": "Bolu Gulung Cokelat",
+      "kategori": "cake",
+      "harga": 12000,
+      "stok": 15,
+      "satuan": "pcs",
+      "sebutan": "potong",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Bolu gulung empuk dengan lapisan selai cokelat manis di setiap gulungannya.",
+      "terlaris": false
+    },
+    {
+      "nama": "Donat Gula (isi 6)",
+      "kategori": "donat",
+      "harga": 30000,
+      "stok": 10,
+      "satuan": "pcs",
+      "sebutan": "bungkus",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Satu bungkus donat kentang goreng empuk berisi enam dengan taburan gula halus.",
+      "terlaris": true
+    },
+    {
+      "nama": "Roti Sobek Cokelat Keju",
+      "kategori": "roti",
+      "harga": 28000,
+      "stok": 8,
+      "satuan": "pcs",
+      "sebutan": "buah",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Roti sobek porsi keluarga dengan perpaduan isian cokelat manis dan parutan keju gurih.",
+      "terlaris": false
+    },
+    {
+      "nama": "Pukis Cokelat (isi 5)",
+      "kategori": "kue tradisional",
+      "harga": 15000,
+      "stok": 12,
+      "satuan": "pcs",
+      "sebutan": "bungkus",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Satu bungkus kue pukis hangat isi lima dengan taburan butiran cokelat.",
+      "terlaris": false
+    },
+    {
+      "nama": "Kue Lumpur (isi 5)",
+      "kategori": "kue tradisional",
+      "harga": 15000,
+      "stok": 12,
+      "satuan": "pcs",
+      "sebutan": "bungkus",
+      "alergen": ["telur", "santan", "gluten"],
+      "deskripsi": "Satu bungkus kue lumpur tradisional isi lima yang lembut dan legit.",
+      "terlaris": true
+    },
+    {
+      "nama": "Risoles Ragout (isi 3)",
+      "kategori": "asin",
+      "harga": 18000,
+      "stok": 9,
+      "satuan": "pcs",
+      "sebutan": "bungkus",
+      "alergen": ["telur", "susu", "gluten", "ayam"],
+      "deskripsi": "Satu bungkus risoles goreng renyah isi tiga dengan olahan ragout ayam gurih.",
+      "terlaris": false
+    },
+    {
+      "nama": "Lapis Legit",
+      "kategori": "kue tradisional",
+      "harga": 22000,
+      "stok": 6,
+      "satuan": "pcs",
+      "sebutan": "potong",
+      "alergen": ["telur", "susu", "gluten"],
+      "deskripsi": "Kue lapis legit panggang berlapis-lapis dengan aroma rempah manis yang khas.",
+      "terlaris": false
+    }
+  ],
+  "paket": [
+    {
+      "nama": "Paket Ngopi Sore",
+      "isi": [
+        {
+          "produk": "Brownies Panggang",
+          "jumlah": 1
+        },
+        {
+          "produk": "Pukis Cokelat (isi 5)",
+          "jumlah": 1
+        }
+      ],
+      "harga": 27000,
+      "sebutan": "paket"
+    },
+    {
+      "nama": "Paket Arisan",
+      "isi": [
+        {
+          "produk": "Donat Gula (isi 6)",
+          "jumlah": 1
+        },
+        {
+          "produk": "Kue Lumpur (isi 5)",
+          "jumlah": 1
+        }
+      ],
+      "harga": 40000,
+      "sebutan": "paket"
+    }
+  ]
+}
