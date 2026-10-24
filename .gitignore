@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Virtual Environment & Panduan Internal
+.venv/
+prompt-antigravity-kue-mas-aniz.md
