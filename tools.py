@@ -1,5 +1,6 @@
 import json
 import os
+import re
 
 def _muat_katalog():
     """Memuat data katalog dari file JSON lokal."""
@@ -12,6 +13,25 @@ def _bersihkan_teks(teks):
     if teks is None:
         return ""
     return " ".join(str(teks).strip().lower().split())
+
+def _cocokkan_nama(nama_input, nama_katalog):
+    """
+    Mencocokkan nama input pelanggan dengan nama produk/paket di katalog.
+    Mendukung pencocokan persis, pembersihan tanda kurung porsi (misal 'isi 6'),
+    dan pencocokan kata kunci fleksibel.
+    """
+    n_in = _bersihkan_teks(nama_input)
+    n_kat = _bersihkan_teks(nama_katalog)
+    if not n_in or not n_kat:
+        return False
+    if n_in == n_kat:
+        return True
+    n_kat_dasar = _bersihkan_teks(re.sub(r'\(.*?\)', '', n_kat))
+    if n_in == n_kat_dasar:
+        return True
+    if len(n_in) >= 4 and (n_in in n_kat or n_kat_dasar in n_in):
+        return True
+    return False
 
 def cari_produk(kata_kunci=None, kategori=None, maks_harga=None):
     """
@@ -114,7 +134,7 @@ def cek_stok(nama):
 
     # Cek di produk satuan
     for p in katalog.get("produk", []):
-        if _bersihkan_teks(p.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, p.get("nama")):
             return {
                 "ditemukan": True,
                 "nama": p["nama"],
@@ -124,14 +144,14 @@ def cek_stok(nama):
 
     # Cek di paket
     for pak in katalog.get("paket", []):
-        if _bersihkan_teks(pak.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, pak.get("nama")):
             stok_komponen = []
             for item in pak.get("isi", []):
-                prod_target = _bersihkan_teks(item.get("produk"))
+                prod_target = item.get("produk")
                 jml_target = item.get("jumlah", 1)
                 stok_item = 0
                 for p in katalog.get("produk", []):
-                    if _bersihkan_teks(p.get("nama")) == prod_target:
+                    if _cocokkan_nama(prod_target, p.get("nama")):
                         stok_item = p.get("stok", 0)
                         break
                 stok_komponen.append(stok_item // max(1, jml_target))
@@ -158,11 +178,10 @@ def info_alergen(nama):
         return {"ditemukan": False, "pesan": "Nama produk tidak boleh kosong."}
 
     katalog = _muat_katalog()
-    nama_norm = _bersihkan_teks(nama)
 
     # Cek di produk satuan
     for p in katalog.get("produk", []):
-        if _bersihkan_teks(p.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, p.get("nama")):
             return {
                 "ditemukan": True,
                 "nama": p["nama"],
@@ -172,12 +191,12 @@ def info_alergen(nama):
 
     # Cek di paket
     for pak in katalog.get("paket", []):
-        if _bersihkan_teks(pak.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, pak.get("nama")):
             semua_alergen = set()
             for item in pak.get("isi", []):
-                prod_target = _bersihkan_teks(item.get("produk"))
+                prod_target = item.get("produk")
                 for p in katalog.get("produk", []):
-                    if _bersihkan_teks(p.get("nama")) == prod_target:
+                    if _cocokkan_nama(prod_target, p.get("nama")):
                         for al in p.get("alergen", []):
                             semua_alergen.add(al)
                         break
@@ -225,12 +244,11 @@ def inisialisasi_stok():
 def _cari_item_katalog(nama):
     """Mencari entitas produk atau paket dari katalog berdasarkan nama."""
     katalog = _muat_katalog()
-    nama_norm = _bersihkan_teks(nama)
     for p in katalog.get("produk", []):
-        if _bersihkan_teks(p.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, p.get("nama")):
             return {"tipe": "produk", "data": p}
     for pak in katalog.get("paket", []):
-        if _bersihkan_teks(pak.get("nama")) == nama_norm:
+        if _cocokkan_nama(nama, pak.get("nama")):
             return {"tipe": "paket", "data": pak}
     return None
 
@@ -321,7 +339,7 @@ def hapus_dari_keranjang(keranjang, nama):
     nama_dihapus = ""
 
     for i, el in enumerate(keranjang):
-        if _bersihkan_teks(el["nama"]) == nama_norm:
+        if _cocokkan_nama(nama, el["nama"]):
             indeks_dihapus = i
             nama_dihapus = el["nama"]
             break

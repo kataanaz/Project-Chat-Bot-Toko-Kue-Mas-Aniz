@@ -19,9 +19,11 @@ Aplikasi chatbot pemesanan kue interaktif berbasis Streamlit dan Google Gemini u
 2. **Katalog & Logika Murni (Tanpa Halusinasi Angka):**
    - Seluruh data produk, harga, stok, dan alergen dimuat dari `data/katalog.json`.
    - Menggunakan Google GenAI Function Calling (`cari_produk`, `cek_stok`, `info_alergen`, `daftar_terlaris`) sehingga LLM tidak pernah menebak atau mengarang angka.
+   - **Pencocokan Nama Cerdas & Fleksibel:** Pengguna dapat memesan atau menanyakan produk secara kasual/alami (misalnya *"donat gula"*, *"pukis"*, atau *"bolu gulung"*) dan sistem otomatis memetakan ke nama resmi katalog seperti *"Donat Gula (isi 6)"* atau *"Pukis Cokelat (isi 5)"*.
 3. **Keranjang Belanja & Checkout Aman (Human-in-the-Loop):**
    - Mendukung penambahan produk satuan maupun menu paket (stok paket dihitung dari minimum stok komponennya).
    - Pengurangan stok toko **hanya terjadi** ketika pelanggan menekan tombol fisik **"✅ Ya, kirim ke kasir"** di layar, mencegah salah paham LLM terhadap persetujuan pesanan.
+   - **Proteksi Tombol "Pesanan Baru" (Two-Step Confirmation):** Tombol *"🔄 Pesanan baru"* dilengkapi dialog konfirmasi peringatan apabila riwayat obrolan atau keranjang belanja sedang aktif, mencegah data pelanggan terhapus tanpa sengaja.
 4. **Panel Kasir Real-Time:**
    - Panel monitoring kasir pada bilah samping (*sidebar*) yang mencatat nomor pesanan resmi (misal: `A-001`), daftar item kue, total biaya, dan status *"Diterima Kasir"*.
 5. **Guardrails Keamanan Ketat:**
@@ -65,11 +67,11 @@ Project-Chat-Bot-Toko-Kue-Mas-Aniz/
 └── docs/
     ├── CHAPTER.md            # Spesifikasi teknis chapter 1 - 8
     ├── hasil-uji.md          # Laporan evaluasi 10 skenario guardrails
-    ├── screenshot-1-tampilan-awal.png            # (Placeholder Screenshot)
-    ├── screenshot-2-rekomendasi-katalog.png      # (Placeholder Screenshot)
-    ├── screenshot-3-keranjang-dan-ringkasan.png  # (Placeholder Screenshot)
-    ├── screenshot-4-panel-kasir.png              # (Placeholder Screenshot)
-    └── screenshot-5-guardrails-persona.png       # (Placeholder Screenshot)
+    ├── screenshot-1-tampilan-awal.png            # (Tangkapan layar antarmuka aktual)
+    ├── screenshot-2-rekomendasi-katalog.png      # (Tangkapan layar antarmuka aktual)
+    ├── screenshot-3-keranjang-dan-ringkasan.png  # (Tangkapan layar antarmuka aktual)
+    ├── screenshot-4-panel-kasir.png              # (Tangkapan layar antarmuka aktual)
+    └── screenshot-5-guardrails-persona.png       # (Tangkapan layar antarmuka aktual)
 ```
 
 ---

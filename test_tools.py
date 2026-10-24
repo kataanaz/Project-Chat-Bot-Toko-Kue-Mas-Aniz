@@ -159,6 +159,27 @@ def test_keranjang_dan_pesanan():
     # 1 Pukis dari Paket Ngopi Sore = 1 terpotong
     assert stok["Pukis Cokelat (isi 5)"] == stok_sebelum_pukis - 1
 
+def test_pencocokan_nama_fleksibel():
+    # Uji kasus nyata pelanggan menyebut 'donat gula' untuk 'Donat Gula (isi 6)'
+    res_stok = tools.cek_stok("donat gula")
+    assert res_stok["ditemukan"] is True
+    assert res_stok["nama"] == "Donat Gula (isi 6)"
+
+    # Uji tambah ke keranjang dengan nama pendek
+    stok = tools.inisialisasi_stok()
+    keranjang = []
+    res_tambah = tools.tambah_ke_keranjang(keranjang, stok, "donat gula", 3)
+    assert res_tambah["berhasil"] is True
+    assert keranjang[0]["nama"] == "Donat Gula (isi 6)"
+    assert keranjang[0]["jumlah"] == 3
+    assert keranjang[0]["subtotal"] == 90000
+
+    # Uji variasi menu lain
+    assert tools.cek_stok("pukis")["nama"] == "Pukis Cokelat (isi 5)"
+    assert tools.cek_stok("kue lumpur")["nama"] == "Kue Lumpur (isi 5)"
+    assert tools.cek_stok("risoles")["nama"] == "Risoles Ragout (isi 3)"
+    assert tools.cek_stok("roti sobek")["nama"] == "Roti Sobek Cokelat Keju"
+
 if __name__ == "__main__":
     print("Menjalankan pengujian tools.py...")
     test_pencarian_normal()
@@ -169,4 +190,5 @@ if __name__ == "__main__":
     test_daftar_terlaris()
     test_ketiadaan_kata_pcs_di_semua_fungsi()
     test_keranjang_dan_pesanan()
+    test_pencocokan_nama_fleksibel()
     print("SEMUA PENGUJIAN tools.py LOLOS 100%!")

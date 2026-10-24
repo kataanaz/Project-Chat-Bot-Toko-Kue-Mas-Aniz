@@ -144,6 +144,9 @@ if "counter_pesanan" not in st.session_state:
 if "siap_konfirmasi" not in st.session_state:
     st.session_state["siap_konfirmasi"] = False
 
+if "konfirmasi_pesanan_baru" not in st.session_state:
+    st.session_state["konfirmasi_pesanan_baru"] = False
+
 PESAN_AWAL = "Halo kak! Selamat datang di Kue Mas Aniz. Ada yang bisa saya bantu pilihkan kuenya hari ini? 🍰"
 if "messages" not in st.session_state:
     st.session_state["messages"] = [
@@ -278,13 +281,37 @@ with st.sidebar:
         st.caption("Keranjang masih kosong.")
 
     st.divider()
-    if st.button("🔄 Pesanan baru", use_container_width=True):
-        st.session_state["messages"] = [
-            {"role": "assistant", "content": PESAN_AWAL}
-        ]
-        st.session_state["keranjang"] = []
-        st.session_state["siap_konfirmasi"] = False
-        st.rerun()
+    if st.session_state.get("konfirmasi_pesanan_baru", False):
+        st.warning("⚠️ Mulai pesanan baru? Riwayat obrolan dan keranjang saat ini akan dihapus.")
+        col_ya, col_batal = st.columns(2)
+        with col_ya:
+            if st.button("✅ Ya, Hapus", type="primary", use_container_width=True, key="btn_konfirmasi_reset_ya"):
+                st.session_state["messages"] = [
+                    {"role": "assistant", "content": PESAN_AWAL}
+                ]
+                st.session_state["keranjang"] = []
+                st.session_state["siap_konfirmasi"] = False
+                st.session_state["konfirmasi_pesanan_baru"] = False
+                st.rerun()
+        with col_batal:
+            if st.button("❌ Batal", use_container_width=True, key="btn_konfirmasi_reset_batal"):
+                st.session_state["konfirmasi_pesanan_baru"] = False
+                st.rerun()
+    else:
+        if st.button("🔄 Pesanan baru", use_container_width=True, key="btn_pesanan_baru"):
+            # Jika ada percakapan atau keranjang berisi item, minta konfirmasi dahulu
+            ada_percakapan = len(st.session_state["messages"]) > 1
+            ada_keranjang = len(st.session_state["keranjang"]) > 0
+            if ada_percakapan or ada_keranjang:
+                st.session_state["konfirmasi_pesanan_baru"] = True
+                st.rerun()
+            else:
+                st.session_state["messages"] = [
+                    {"role": "assistant", "content": PESAN_AWAL}
+                ]
+                st.session_state["keranjang"] = []
+                st.session_state["siap_konfirmasi"] = False
+                st.rerun()
 
 # 9. Area Chat Utama
 st.title("🍰 Toko Kue Mas Aniz")
